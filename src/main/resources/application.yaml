@@ -1,0 +1,18 @@
+ktor:
+  database:
+    connectionString: ${MONGO_CONNECTION_STRING}
+    dbName: ${MONGODB_DATABASE}
+  deployment:
+    port: 8080
+    watch:
+      - classes
+      - resources
+  application:
+    modules:
+      - com.example.ApplicationKt.module
+  development: true
+jwt:
+  issuer: "http://0.0.0.0:8080"
+  audience: "users"
+  realm: "ktor sample app"
+  secret: ${JWT_SECRET}

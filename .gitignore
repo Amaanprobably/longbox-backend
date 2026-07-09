@@ -1,0 +1,29 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+# Ignored default folder with query files
+/queries/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Build outputs
+build/
+.gradle/
+*.jar
+*.tar
+*.zip
+
+# IDE
+.idea/
+*.iml
+
+# Local config
+local.properties
+.env
+.kotlin/
+
+# OS
+.DS_Store
