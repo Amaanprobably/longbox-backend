@@ -6,7 +6,6 @@ import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import com.mongodb.client.model.Updates
-import com.mongodb.client.model.Updates.set
 import org.bson.types.ObjectId
 
 class MongoUserDataSource(
