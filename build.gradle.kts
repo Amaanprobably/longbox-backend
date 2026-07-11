@@ -36,10 +36,19 @@ dependencies {
     implementation(libs.mongodb.bson)
     implementation(libs.mongodb.driverCore)
     implementation(ktorLibs.server.rateLimit)
+
     implementation("org.mongodb:mongodb-driver-kotlin-coroutine:5.8.0")
     implementation("commons-codec:commons-codec:1.18.0")
     implementation("io.sentry:sentry:7.10.0")
 
+    implementation(ktorLibs.client.core)
+    implementation(ktorLibs.client.cio)
+    implementation(ktorLibs.client.contentNegotiation)
+    implementation(ktorLibs.client.logging)
+
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.8")
+
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
+
 }

@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.defaultheaders.*
+import java.time.Duration
 
 fun Application.configureHttp() {
     install(CORS) {
@@ -18,6 +19,10 @@ fun Application.configureHttp() {
     }
     install(Compression)
     install(DefaultHeaders) {
-        header("X-Engine", "Ktor") // will send this header with each response
+        val oneYearInSeconds = Duration.ofDays(365).seconds
+        header(
+            name = HttpHeaders.CacheControl,
+            value = "public, max-age=$oneYearInSeconds, immutable"
+        )
     }
 }

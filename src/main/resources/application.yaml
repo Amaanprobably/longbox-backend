@@ -16,3 +16,6 @@ jwt:
   audience: "users"
   realm: "ktor sample app"
   secret: ${JWT_SECRET}
+comicvine:
+    api:
+      key: ${COMICVINE_API_KEY}

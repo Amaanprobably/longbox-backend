@@ -5,6 +5,7 @@ import com.example.data.requests.AuthRequest
 import com.example.data.requests.RefreshRequest
 import com.example.data.responses.AuthResponse
 import com.example.data.user.UserDataSource
+import com.example.domain.repository.ComicVineRepository
 import com.example.security.hashing.HashingService
 import com.example.security.hashing.SaltedHash
 import com.example.security.token.TokenClaim
@@ -140,6 +141,39 @@ fun Route.refresh(userDataSource: UserDataSource, tokenService: TokenService, to
             System.currentTimeMillis() + (14L * 24 * 60 * 60 * 1000) //14 days
         )
         call.respond(AuthResponse(newAccessToken, newRefreshToken))
+    }
+}
+fun Route.getCharacter(comicVineRepository: ComicVineRepository) {
+    get("/characters/{id}") {
+        val id = call.parameters["id"]?.toIntOrNull() ?: run {
+            call.respond(HttpStatusCode.BadRequest, "Invalid character id")
+            return@get
+        }
+
+        try {
+            val character = comicVineRepository.getCharacter(id)
+            call.respond(HttpStatusCode.OK, character)
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "Failed to fetch character")
+        }
+    }
+}
+
+fun Route.searchCharacters(comicVineRepository: ComicVineRepository) {
+    get("/characters/search") {
+        val query = call.request.queryParameters["query"]?.trim()
+
+        if (query.isNullOrBlank()) {
+            call.respond(HttpStatusCode.BadRequest, "Query parameter is required")
+            return@get
+        }
+
+        try {
+            val results = comicVineRepository.searchCharacters(query)
+            call.respond(HttpStatusCode.OK, results)
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.InternalServerError, "Failed to search characters")
+        }
     }
 }
 
