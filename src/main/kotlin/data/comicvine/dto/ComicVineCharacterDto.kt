@@ -16,7 +16,7 @@ data class ComicVineCharacterDto(
 
 @Serializable
 data class ComicVineImageDto(
-    @SerialName("medium_url")
+    @SerialName("original_url")
     val mediumUrl: String? = null
 )
 

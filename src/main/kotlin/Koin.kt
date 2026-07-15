@@ -2,6 +2,8 @@ package com.example
 
 import com.example.cache.CharacterCache
 import com.example.cache.createCharacterCache
+import com.example.data.comicvine.ComicVineClient
+import com.example.data.comicvine.ComicVineRateLimiter
 import com.example.data.repository.ComicVineRepositoryImpl
 import com.example.data.user.MongoUserDataSource
 import com.example.data.user.UserDataSource
@@ -52,10 +54,19 @@ fun appModule(config: ApplicationConfig) = module {
 
     single<CharacterCache> { createCharacterCache() }
 
+    single<ComicVineRateLimiter> { ComicVineRateLimiter() }
+
+    single{
+        ComicVineClient(
+            httpClient = get(),
+            rateLimiter = get()
+        )
+    }
+
     single<ComicVineRepository> {
         ComicVineRepositoryImpl(
             cache = get(),
-            httpClient = get(),
+            client = get(),
             apiKey = config.property("comicvine.api.key").getString()
         )
     }

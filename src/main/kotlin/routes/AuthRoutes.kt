@@ -154,7 +154,7 @@ fun Route.getCharacter(comicVineRepository: ComicVineRepository) {
             val character = comicVineRepository.getCharacter(id)
             call.respond(HttpStatusCode.OK, character)
         } catch (e: Exception) {
-            call.respond(HttpStatusCode.InternalServerError, "Failed to fetch character")
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
         }
     }
 }
@@ -172,7 +172,7 @@ fun Route.searchCharacters(comicVineRepository: ComicVineRepository) {
             val results = comicVineRepository.searchCharacters(query)
             call.respond(HttpStatusCode.OK, results)
         } catch (e: Exception) {
-            call.respond(HttpStatusCode.InternalServerError, "Failed to search characters")
+            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
         }
     }
 }
