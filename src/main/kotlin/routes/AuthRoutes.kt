@@ -149,31 +149,28 @@ fun Route.getCharacter(comicVineRepository: ComicVineRepository) {
             call.respond(HttpStatusCode.BadRequest, "Invalid character id")
             return@get
         }
-
-        try {
-            val character = comicVineRepository.getCharacter(id)
-            call.respond(HttpStatusCode.OK, character)
-        } catch (e: Exception) {
-            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
-        }
+        val character = comicVineRepository.getCharacter(id)
+        call.respond(HttpStatusCode.OK, character)
     }
 }
 
 fun Route.searchCharacters(comicVineRepository: ComicVineRepository) {
     get("/characters/search") {
         val query = call.request.queryParameters["query"]?.trim()
-
+        val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
         if (query.isNullOrBlank()) {
             call.respond(HttpStatusCode.BadRequest, "Query parameter is required")
             return@get
         }
-
-        try {
-            val results = comicVineRepository.searchCharacters(query)
-            call.respond(HttpStatusCode.OK, results)
-        } catch (e: Exception) {
-            call.respond(HttpStatusCode.InternalServerError, "${e.message}")
-        }
+        val results = comicVineRepository.searchCharacters(query,offset)
+        call.respond(HttpStatusCode.OK, results)
+    }
+}
+fun Route.getBrowseCharacters(comicVineRepository: ComicVineRepository) {
+    get("/characters") {
+        val offset = call.request.queryParameters["offset"]?.toIntOrNull() ?: 0
+        val results = comicVineRepository.getBrowseCharacters(offset)
+        call.respond(HttpStatusCode.OK, results)
     }
 }
 

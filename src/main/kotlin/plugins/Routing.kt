@@ -3,6 +3,7 @@ package com.example.plugins
 import com.example.routes.authenticateRoute
 import com.example.data.user.UserDataSource
 import com.example.domain.repository.ComicVineRepository
+import com.example.routes.getBrowseCharacters
 import com.example.routes.getCharacter
 import com.example.routes.refresh
 import com.example.routes.searchCharacters
@@ -33,6 +34,7 @@ fun Application.configureRouting() {
         }
         getCharacter(comicVineRepository)
         searchCharacters(comicVineRepository)
+        getBrowseCharacters(comicVineRepository)
         authenticate{
             authenticateRoute()
             secretInfo()

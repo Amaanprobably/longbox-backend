@@ -1,7 +1,9 @@
 package com.example
 
 import com.example.cache.CharacterCache
+import com.example.cache.CharacterListCache
 import com.example.cache.createCharacterCache
+import com.example.cache.createCharacterListCache
 import com.example.data.comicvine.ComicVineClient
 import com.example.data.comicvine.ComicVineRateLimiter
 import com.example.data.repository.ComicVineRepositoryImpl
@@ -54,6 +56,8 @@ fun appModule(config: ApplicationConfig) = module {
 
     single<CharacterCache> { createCharacterCache() }
 
+    single<CharacterListCache> { createCharacterListCache() }
+
     single<ComicVineRateLimiter> { ComicVineRateLimiter() }
 
     single{
@@ -65,7 +69,8 @@ fun appModule(config: ApplicationConfig) = module {
 
     single<ComicVineRepository> {
         ComicVineRepositoryImpl(
-            cache = get(),
+            characterCache = get(),
+            listCache = get(),
             client = get(),
             apiKey = config.property("comicvine.api.key").getString()
         )

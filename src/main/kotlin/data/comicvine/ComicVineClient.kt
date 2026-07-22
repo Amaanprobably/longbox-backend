@@ -1,6 +1,7 @@
 package com.example.data.comicvine
 
 import com.example.data.comicvine.dto.ComicVineResponse
+import com.example.domain.error.AppException.ComicVineRateLimitException
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -24,8 +25,6 @@ class ComicVineClient(
             }
             return response.body()
         }
-        throw ComicVineRateLimitException("Still rate-limited after $maxRetries retries")
+        throw ComicVineRateLimitException()
     }
 }
-
-class ComicVineRateLimitException(message: String) : Exception(message)
