@@ -2,6 +2,7 @@ package com.example.plugins
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.*
@@ -20,6 +21,10 @@ fun createHttpClient(): HttpClient {
         }
         install(Logging) {
             level = LogLevel.INFO
+        }
+        install(HttpTimeout) {
+            requestTimeoutMillis = 15_000
+            connectTimeoutMillis = 5_000
         }
         defaultRequest {
             url("https://comicvine.gamespot.com/api/")

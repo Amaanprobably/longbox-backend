@@ -10,13 +10,15 @@ typealias CharacterListCache = Cache<String, List<Character>>
 
 fun createCharacterCache(): CharacterCache {
     return Caffeine.newBuilder()
-        .maximumSize(500)
+        .maximumSize(2000)
         .expireAfterWrite(120, TimeUnit.MINUTES)
+        .recordStats()
         .build()
 }
 fun createCharacterListCache(): CharacterListCache {
     return Caffeine.newBuilder()
         .maximumSize(200)
-        .expireAfterWrite(60, TimeUnit.MINUTES) // Same as rate-limit duration
+        .expireAfterWrite(60, TimeUnit.MINUTES) // matches Comic Vine's 200 requests/hour quota window
+        .recordStats()
         .build()
 }

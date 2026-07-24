@@ -20,6 +20,7 @@ import com.mongodb.kotlin.client.coroutine.MongoClient
 import io.ktor.client.HttpClient
 import io.ktor.server.application.*
 import io.ktor.server.config.ApplicationConfig
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
@@ -54,9 +55,9 @@ fun appModule(config: ApplicationConfig) = module {
 
     single<HttpClient> { createHttpClient() }
 
-    single<CharacterCache> { createCharacterCache() }
+    single<CharacterCache>(named("characterCache")) { createCharacterCache() }
 
-    single<CharacterListCache> { createCharacterListCache() }
+    single<CharacterListCache>(named("characterListCache")) { createCharacterListCache() }
 
     single<ComicVineRateLimiter> { ComicVineRateLimiter() }
 
@@ -69,8 +70,8 @@ fun appModule(config: ApplicationConfig) = module {
 
     single<ComicVineRepository> {
         ComicVineRepositoryImpl(
-            characterCache = get(),
-            listCache = get(),
+            characterCache = get(named("characterCache")),
+            listCache = get(named("characterListCache")),
             client = get(),
             apiKey = config.property("comicvine.api.key").getString()
         )

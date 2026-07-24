@@ -1,5 +1,9 @@
 package com.example.routes
 
+import com.example.cache.AllCacheStatsDto
+import com.example.cache.CacheStatsDto
+import com.example.cache.CharacterCache
+import com.example.cache.CharacterListCache
 import com.example.data.model.User
 import com.example.data.requests.AuthRequest
 import com.example.data.requests.RefreshRequest
@@ -173,7 +177,33 @@ fun Route.getBrowseCharacters(comicVineRepository: ComicVineRepository) {
         call.respond(HttpStatusCode.OK, results)
     }
 }
+fun Route.getCacheStats(characterCache: CharacterCache,characterListCache: CharacterListCache){
+    get("/admin/cache-stats") {
+        val charStats = characterCache.stats()
+        val listStats = characterListCache.stats()
 
+        call.respond(
+            AllCacheStatsDto(
+                characterCache = CacheStatsDto(
+                    hitRate = charStats.hitRate(),
+                    missRate = charStats.missRate(),
+                    hitCount = charStats.hitCount(),
+                    missCount = charStats.missCount(),
+                    evictionCount = charStats.evictionCount(),
+                    estimatedSize = characterCache.estimatedSize()
+                ),
+                listCache = CacheStatsDto(
+                    hitRate = listStats.hitRate(),
+                    missRate = listStats.missRate(),
+                    hitCount = listStats.hitCount(),
+                    missCount = listStats.missCount(),
+                    evictionCount = listStats.evictionCount(),
+                    estimatedSize = characterListCache.estimatedSize()
+                )
+            )
+        )
+    }
+}
 fun Route.secretInfo(){
     get("auth/secret"){
         val principal = call.principal<JWTPrincipal>()

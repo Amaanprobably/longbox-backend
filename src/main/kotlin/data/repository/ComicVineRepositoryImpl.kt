@@ -31,6 +31,7 @@ class ComicVineRepositoryImpl(
             client.getResource<ComicVineCharacterDto>("character/4005-$id/") {
                 parameter("api_key", apiKey)
                 parameter("format", "json")
+                parameter("field_list", "id,name,deck,description,image,publisher,count_of_issue_appearances,character_friends,character_enemies")
             }.results.toDomain()
         }
         characterCache.put(cacheKey, character)
