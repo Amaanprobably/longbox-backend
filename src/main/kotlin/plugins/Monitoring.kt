@@ -1,5 +1,7 @@
 package com.example.plugins
 
+import com.example.cache.CharacterCache
+import com.example.cache.CharacterListCache
 import io.ktor.server.application.*
 import io.ktor.http.*
 import io.ktor.server.plugins.callid.*
@@ -7,8 +9,12 @@ import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.uri
 import io.sentry.Sentry
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.slf4j.event.Level
 import java.util.UUID
+import kotlin.time.Duration.Companion.minutes
 
 fun Application.configureMonitoring() {
     install(CallId) {
@@ -30,5 +36,14 @@ fun Application.configureMonitoring() {
         options.dsn = System.getenv("SENTRY_DSN")
         options.isDebug = true
         options.tracesSampleRate = 1.0
+    }
+}
+fun Application.startCacheStatsLogging(characterCache: CharacterCache, listCache: CharacterListCache) {
+    launch {
+        while (isActive) {
+            delay(15.minutes)
+            log.info("CharacterCache stats: ${characterCache.stats()}")
+            log.info("ListCache stats: ${listCache.stats()}")
+        }
     }
 }

@@ -38,11 +38,11 @@ fun Application.configureRouting() {
             signin(hashingService, userDataSource, tokenService, tokenConfig)
             refresh(userDataSource, tokenService, tokenConfig)
         }
-        getCharacter(comicVineRepository)
-        searchCharacters(comicVineRepository)
-        getBrowseCharacters(comicVineRepository)
         getCacheStats(characterCache, characterListCache)
         authenticate{
+            getCharacter(comicVineRepository)
+            searchCharacters(comicVineRepository)
+            getBrowseCharacters(comicVineRepository)
             authenticateRoute()
             secretInfo()
         }
