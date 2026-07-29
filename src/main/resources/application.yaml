@@ -19,3 +19,5 @@ jwt:
 comicvine:
     api:
       key: ${COMICVINE_API_KEY}
+admin:
+  password: ${ADMIN_PASSWORD}

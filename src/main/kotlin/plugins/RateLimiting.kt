@@ -19,5 +19,11 @@ fun Application.configureRateLimiting() {
                 call.request.origin.remoteHost
             }
         }
+        register(RateLimitName("admin")) {
+            rateLimiter(limit = 5, refillPeriod = 60.seconds)
+            requestKey { call ->
+                call.request.origin.remoteHost
+            }
+        }
     }
 }

@@ -75,7 +75,7 @@ fun Route.signin(
         }
         val user = userDataSource.getUserByUsername(username)
         if(user == null){
-            call.respond(HttpStatusCode.NotFound)
+            call.respond(HttpStatusCode.Unauthorized)
             return@post
         }
         val isCorrectPassword = hashingService.verify(
@@ -86,7 +86,7 @@ fun Route.signin(
                 )
         )
         if(!isCorrectPassword){
-            call.respond(HttpStatusCode.BadRequest)
+            call.respond(HttpStatusCode.Unauthorized)
             return@post
         }
         val authToken = tokenService.generate(
@@ -100,7 +100,7 @@ fun Route.signin(
         userDataSource.saveRefreshToken(
             userId = user.id,
             refreshToken = hashRefreshToken(refreshToken),
-            System.currentTimeMillis() + (14L * 24 * 60 * 60 * 1000) //14 days
+            refreshTokenExpiresAt = System.currentTimeMillis() + (14L * 24 * 60 * 60 * 1000) //14 days
         )
         call.respond(HttpStatusCode.OK, AuthResponse(authToken, refreshToken))
     }
@@ -108,7 +108,9 @@ fun Route.signin(
 
 fun Route.authenticateRoute(){
     get("auth/authenticate"){
-        call.respond(HttpStatusCode.OK)
+        val principal = call.principal<JWTPrincipal>()
+        val userId = principal?.getClaim("userId", String::class)
+        call.respond(HttpStatusCode.OK, mapOf("userId" to userId))
     }
 }
 
@@ -202,13 +204,6 @@ fun Route.getCacheStats(characterCache: CharacterCache,characterListCache: Chara
                 )
             )
         )
-    }
-}
-fun Route.secretInfo(){
-    get("auth/secret"){
-        val principal = call.principal<JWTPrincipal>()
-        val userId = principal?.getClaim("userId",String::class)
-        call.respond(HttpStatusCode.OK,"Your userId is $userId")
     }
 }
 

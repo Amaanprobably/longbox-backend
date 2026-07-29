@@ -6,13 +6,20 @@ import kotlinx.coroutines.sync.withLock
 
 class ComicVineRateLimiter(private val minIntervalMs: Long = 1200L) {
     private val mutex = Mutex()
-    private var lastRequestTime = 0L
+    private var nextAllowedTime = 0L
 
     suspend fun acquire() {
         mutex.withLock {
-            val elapsed = System.currentTimeMillis() - lastRequestTime
-            if (elapsed < minIntervalMs) delay(minIntervalMs - elapsed)
-            lastRequestTime = System.currentTimeMillis()
+            val now = System.currentTimeMillis()
+            val waitTime = nextAllowedTime - now
+            if (waitTime > 0) delay(waitTime)
+            nextAllowedTime = maxOf(nextAllowedTime, System.currentTimeMillis()) + minIntervalMs
+        }
+    }
+    suspend fun penalize(durationMs: Long) {
+        mutex.withLock {
+            val proposed = System.currentTimeMillis() + durationMs
+            if (proposed > nextAllowedTime) nextAllowedTime = proposed
         }
     }
 }

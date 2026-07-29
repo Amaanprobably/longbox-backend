@@ -18,8 +18,6 @@ fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }
 fun Application.module(){
-    val characterCache by inject<CharacterCache>(named("characterCache"))
-    val characterListCache by inject<CharacterListCache>(named("characterListCache"))
     configureKoin()
     configureSecurity()
     configureRateLimiting()
@@ -29,5 +27,7 @@ fun Application.module(){
     configureMonitoring()
     configureHttp()
     //Cache Logging
+    val characterCache by inject<CharacterCache>(named("characterCache"))
+    val characterListCache by inject<CharacterListCache>(named("characterListCache"))
     startCacheStatsLogging(characterCache, characterListCache)
 }

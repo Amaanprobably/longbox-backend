@@ -20,7 +20,7 @@ class ComicVineClient(
             rateLimiter.acquire()
             val response = httpClient.get(url) { block() }
             if (response.status.value == 420) {
-                delay(2000L * (attempt + 1))
+                rateLimiter.penalize(2000L * (attempt + 1))
                 return@repeat
             }
             return response.body()

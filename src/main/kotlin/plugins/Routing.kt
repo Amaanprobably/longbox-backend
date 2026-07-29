@@ -10,7 +10,6 @@ import com.example.routes.getCacheStats
 import com.example.routes.getCharacter
 import com.example.routes.refresh
 import com.example.routes.searchCharacters
-import com.example.routes.secretInfo
 import com.example.security.hashing.HashingService
 import com.example.security.token.TokenConfig
 import com.example.security.token.TokenService
@@ -38,13 +37,16 @@ fun Application.configureRouting() {
             signin(hashingService, userDataSource, tokenService, tokenConfig)
             refresh(userDataSource, tokenService, tokenConfig)
         }
-        getCacheStats(characterCache, characterListCache)
+        rateLimit(RateLimitName("admin")) {
+            authenticate("admin-auth") {
+                getCacheStats(characterCache, characterListCache)
+            }
+        }
         authenticate{
             getCharacter(comicVineRepository)
             searchCharacters(comicVineRepository)
             getBrowseCharacters(comicVineRepository)
             authenticateRoute()
-            secretInfo()
         }
     }
 }

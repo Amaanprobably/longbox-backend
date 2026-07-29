@@ -11,6 +11,7 @@ fun Application.configureSecurity() {
     val jwtIssuer = environment.config.property("jwt.issuer").getString()
     val jwtRealm = environment.config.property("jwt.realm").getString()
     val jwtSecret = environment.config.property("jwt.secret").getString()
+    val adminPassword = environment.config.property("admin.password").getString()
     authentication {
         jwt {
             realm = jwtRealm
@@ -23,6 +24,14 @@ fun Application.configureSecurity() {
             )
             validate { credential ->
                 if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
+            }
+        }
+        basic("admin-auth") {
+            realm = "Admin"
+            validate { credentials ->
+                if (credentials.name == "admin" && credentials.password == adminPassword) {
+                    UserIdPrincipal(credentials.name)
+                } else null
             }
         }
     }
