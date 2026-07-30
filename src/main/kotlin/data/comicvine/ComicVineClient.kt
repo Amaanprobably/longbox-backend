@@ -5,7 +5,7 @@ import com.example.domain.error.AppException.ComicVineRateLimitException
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
-import kotlinx.coroutines.delay
+
 
 class ComicVineClient(
     val httpClient: HttpClient,

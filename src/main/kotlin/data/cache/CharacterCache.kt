@@ -1,4 +1,4 @@
-package com.example.cache
+package com.example.data.cache
 
 import com.example.domain.model.Character
 import com.github.benmanes.caffeine.cache.Cache

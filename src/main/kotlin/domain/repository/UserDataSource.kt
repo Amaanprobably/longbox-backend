@@ -1,6 +1,6 @@
-package com.example.data.user
+package com.example.domain.repository
 
-import com.example.data.model.User
+import com.example.data.user.User
 import org.bson.types.ObjectId
 
 interface UserDataSource {

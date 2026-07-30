@@ -1,9 +1,9 @@
 package com.example.plugins
 
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
 import com.example.routes.authenticateRoute
-import com.example.data.user.UserDataSource
+import com.example.domain.repository.UserDataSource
 import com.example.domain.repository.ComicVineRepository
 import com.example.routes.getBrowseCharacters
 import com.example.routes.getCacheStats

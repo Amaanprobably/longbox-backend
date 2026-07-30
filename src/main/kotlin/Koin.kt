@@ -1,14 +1,14 @@
 package com.example
 
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
-import com.example.cache.createCharacterCache
-import com.example.cache.createCharacterListCache
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
+import com.example.data.cache.createCharacterCache
+import com.example.data.cache.createCharacterListCache
 import com.example.data.comicvine.ComicVineClient
 import com.example.data.comicvine.ComicVineRateLimiter
 import com.example.data.repository.ComicVineRepositoryImpl
 import com.example.data.user.MongoUserDataSource
-import com.example.data.user.UserDataSource
+import com.example.domain.repository.UserDataSource
 import com.example.domain.repository.ComicVineRepository
 import com.example.plugins.createHttpClient
 import com.example.security.hashing.HashingService

@@ -1,4 +1,4 @@
-package com.example.cache
+package com.example.data.cache
 
 import kotlinx.serialization.Serializable
 

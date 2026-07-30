@@ -1,6 +1,6 @@
 package com.example.data.user
 
-import com.example.data.model.User
+import com.example.domain.repository.UserDataSource
 import com.example.security.token.hashRefreshToken
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.kotlin.client.coroutine.MongoDatabase

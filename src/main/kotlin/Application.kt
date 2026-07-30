@@ -1,7 +1,7 @@
 package com.example
 
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
 import com.example.plugins.configureHttp
 import com.example.plugins.configureMonitoring
 import com.example.plugins.configureRateLimiting

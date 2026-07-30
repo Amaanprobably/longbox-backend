@@ -1,7 +1,7 @@
 package com.example.plugins
 
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
 import io.ktor.server.application.*
 import io.ktor.http.*
 import io.ktor.server.plugins.callid.*

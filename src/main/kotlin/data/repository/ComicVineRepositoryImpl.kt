@@ -1,7 +1,7 @@
 package com.example.data.repository
 
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
 import com.example.data.comicvine.ComicVineClient
 import com.example.data.comicvine.dto.ComicVineCharacterDto
 import com.example.data.comicvine.mapper.toDomain

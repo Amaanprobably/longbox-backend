@@ -1,14 +1,14 @@
 package com.example.routes
 
-import com.example.cache.AllCacheStatsDto
-import com.example.cache.CacheStatsDto
-import com.example.cache.CharacterCache
-import com.example.cache.CharacterListCache
-import com.example.data.model.User
-import com.example.data.requests.AuthRequest
-import com.example.data.requests.RefreshRequest
-import com.example.data.responses.AuthResponse
-import com.example.data.user.UserDataSource
+import com.example.data.cache.AllCacheStatsDto
+import com.example.data.cache.CacheStatsDto
+import com.example.data.cache.CharacterCache
+import com.example.data.cache.CharacterListCache
+import com.example.data.user.User
+import com.example.data.auth.requests.AuthRequest
+import com.example.data.auth.requests.RefreshRequest
+import com.example.data.auth.responses.AuthResponse
+import com.example.domain.repository.UserDataSource
 import com.example.domain.repository.ComicVineRepository
 import com.example.security.hashing.HashingService
 import com.example.security.hashing.SaltedHash
